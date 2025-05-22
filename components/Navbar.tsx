@@ -1,6 +1,8 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { Music } from 'lucide-react';
 import { supabase } from '@/lib/supabaseClient';
+import Link from 'next/link';
 
 interface NavbarProps {
   onUploadClick: () => void;
@@ -41,23 +43,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
           </div>
 
           <div className="hidden md:flex items-center space-x-6">
-            <a href="/" className="hover:text-blue-200 transition-colors">Home</a>
+            <Link href="/" className="hover:text-blue-200 transition-colors">Home</Link>
             <a href="#beats" className="hover:text-blue-200 transition-colors">Beats</a>
-            <a href="/mixing-service" className="hover:text-blue-200 transition-colors">Mixing Service</a>
-            <a href="/album-sell" className="hover:text-blue-200 transition-colors">Albums</a>
-            <a href="/profile" className="hover:text-blue-200 transition-colors">My Profile</a>
+            <Link href="/mixing-service" className="hover:text-blue-200 transition-colors">Mixing Service</Link>
+            <Link href="/albumsell" className="hover:text-blue-200 transition-colors">Albums</Link>
+            <Link href="/myprofile" className="hover:text-blue-200 transition-colors">My Profile</Link>
             {!user && (
               <>
-                <a href="/signup" className="hover:text-blue-200 transition-colors">Sign Up</a>
-                <a href="/signin" className="hover:text-blue-200 transition-colors">Sign In</a>
+                <Link href="/signup" className="hover:text-blue-200 transition-colors">Sign Up</Link>
+                <Link href="/signin" className="hover:text-blue-200 transition-colors">Sign In</Link>
               </>
             )}
             {user && (
-              <>
-                <button onClick={handleLogout} className="hover:text-red-300 transition-colors">
-                  Logout
-                </button>
-              </>
+              <button onClick={handleLogout} className="hover:text-red-300 transition-colors">
+                Logout
+              </button>
             )}
           </div>
 
