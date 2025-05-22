@@ -27,7 +27,12 @@ export default function HomePage() {
       <Footer />
 
       <BeatUploadModal isOpen={isBeatUploadOpen} onClose={() => setIsBeatUploadOpen(false)} />
-      <JoinServiceModal isOpen={isJoinServiceOpen} onClose={() => setIsJoinServiceOpen(false)} />
+      <JoinServiceModal
+  isOpen={isJoinServiceOpen}
+  onClose={() => setIsJoinServiceOpen(false)}
+  onSubmit={() => {}}
+/>
+
     </>
   );
 }
