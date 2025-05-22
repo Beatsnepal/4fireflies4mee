@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
             <Link href="/" className="hover:text-blue-200 transition-colors">Home</Link>
             <a href="#beats" className="hover:text-blue-200 transition-colors">Beats</a>
             <Link href="/mixing-service" className="hover:text-blue-200 transition-colors">Mixing Service</Link>
-            <Link href="/albumsell" className="hover:text-blue-200 transition-colors">Albums</Link>
+            <Link href="/album-sell" className="hover:text-blue-200 transition-colors">Albums</Link>
             <Link href="/myprofile" className="hover:text-blue-200 transition-colors">My Profile</Link>
             {!user && (
               <>

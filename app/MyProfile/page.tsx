@@ -1,4 +1,3 @@
-
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
@@ -19,9 +18,7 @@ export default function Page() {
       .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
-    if (!error && data) {
-      setBeats(data);
-    }
+    if (!error && data) setBeats(data);
   };
 
   useEffect(() => {
@@ -43,42 +40,47 @@ export default function Page() {
   }, []);
 
   const handleDelete = async (id: number) => {
-    const confirm = window.confirm("Are you sure you want to delete this beat?");
-    if (!confirm) return;
+    const confirmDelete = window.confirm("Are you sure you want to delete this beat?");
+    if (!confirmDelete) return;
 
     const { error } = await supabase.from('beats').delete().eq('id', id);
     if (!error && user) {
       await refreshBeats(user.id);
-      alert("Deleted!");
+      alert("Beat deleted!");
     }
   };
 
   return (
     <>
       <Navbar onUploadClick={() => {}} />
-      <section className="py-20 bg-white text-blue-900 min-h-screen">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-10 bg-white text-blue-900 px-6 py-6 rounded-xl shadow-lg">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 md:mb-0">🎧 My Profile</h2>
+      <section className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-white py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Profile Header */}
+          <div className="flex flex-col md:flex-row justify-between items-center bg-white shadow-md rounded-xl px-6 py-6 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4 md:mb-0">
+              🎧 My Profile
+            </h2>
             {user && (
-              <p className="text-md md:text-lg font-medium">
-                Logged in as <span className="font-bold">{user.email}</span>
+              <p className="text-md sm:text-lg text-blue-700 font-medium">
+                Logged in as <span className="font-semibold">{user.email}</span>
               </p>
             )}
           </div>
 
+          {/* Content */}
           {loading ? (
-            <p className="text-center text-blue-300">Loading your beats...</p>
+            <p className="text-center text-blue-400 text-lg">Loading your beats...</p>
           ) : beats.length === 0 ? (
-            <p className="text-center text-blue-300">You haven't uploaded any beats yet.</p>
+            <p className="text-center text-blue-400 text-lg">You haven't uploaded any beats yet.</p>
           ) : (
-            <div className="overflow-x-auto bg-blue-50 rounded-lg shadow border border-blue-100">
-              <audio id="profile-audio" className="hidden"></audio>
-              <table className="min-w-full text-left text-sm text-blue-900">
-                <thead className="bg-blue-600 text-white">
+            <div className="overflow-x-auto rounded-xl shadow border border-blue-100 bg-white">
+              <audio id="profile-audio" className="hidden" />
+
+              <table className="min-w-full divide-y divide-blue-100 text-sm sm:text-base">
+                <thead className="bg-blue-600 text-white text-left">
                   <tr>
                     <th className="px-4 py-3">#</th>
-                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">Track</th>
                     <th className="px-4 py-3">Key & BPM</th>
                     <th className="px-4 py-3">Price</th>
                     <th className="px-4 py-3">Actions</th>
@@ -86,9 +88,9 @@ export default function Page() {
                 </thead>
                 <tbody>
                   {beats.map((beat, index) => (
-                    <tr key={beat.id} className="border-b hover:bg-blue-50 transition">
-                      <td className="px-4 py-2">{index + 1}</td>
-                      <td className="px-4 py-2 font-semibold flex items-center gap-2">
+                    <tr key={beat.id} className="hover:bg-blue-50 transition">
+                      <td className="px-4 py-3 text-gray-700">{index + 1}</td>
+                      <td className="px-4 py-3 font-medium text-blue-800 flex items-center gap-2">
                         <button
                           onClick={() => {
                             const audio = document.getElementById('profile-audio') as HTMLAudioElement;
@@ -106,28 +108,28 @@ export default function Page() {
                               if (playIcon) playIcon.textContent = "▶️";
                             }
                           }}
-                          className="text-lg text-blue-700 hover:text-blue-900 transition"
+                          className="text-xl text-blue-600 hover:text-blue-800"
                           style={{ background: "none", border: "none" }}
                         >
                           <span id={`icon-${beat.id}`}>▶️</span>
                         </button>
                         {beat.name}
                       </td>
-                      <td className="px-4 py-2">{beat.key} • {beat.bpm} BPM</td>
-                      <td className="px-4 py-2">Rs {beat.price}</td>
-                      <td className="px-4 py-2 space-x-2">
+                      <td className="px-4 py-3 text-blue-700">{beat.key} • {beat.bpm} BPM</td>
+                      <td className="px-4 py-3 text-blue-700">Rs {beat.price}</td>
+                      <td className="px-4 py-3 space-x-2">
                         <button
                           onClick={() => {
                             setSelectedBeat(beat);
                             setIsEditOpen(true);
                           }}
-                          className="text-sm px-3 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white"
+                          className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm px-3 py-1 rounded shadow"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(beat.id)}
-                          className="text-sm px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white"
+                          className="bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm px-3 py-1 rounded shadow"
                         >
                           Delete
                         </button>
